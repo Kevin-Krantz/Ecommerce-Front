@@ -4,8 +4,8 @@ import { ButtonStyle } from "./Button";
 
 export default function ButtonLink({
   children,
-  white,
-  outline,
+  $white: white,
+  $outline: outline,
   $primary: primary,
   size,
   href,
@@ -15,8 +15,8 @@ export default function ButtonLink({
 } & IButtonLinkProps) {
   return (
     <StyledLink
-      white={white}
-      outline={outline}
+      $white={white}
+      $outline={outline}
       $primary={primary}
       size={size}
       href={href}

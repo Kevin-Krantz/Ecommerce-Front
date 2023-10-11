@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 export default function Button({
   children,
-  white,
-  outline,
+  $white: white,
+  $outline: outline,
   $primary: primary,
   size,
   ...rest
@@ -13,8 +13,8 @@ export default function Button({
 } & IButtonProps) {
   return (
     <StyledButton
-      white={white}
-      outline={outline}
+      $white={white}
+      $outline={outline}
       $primary={primary}
       size={size}
       {...rest}
@@ -40,16 +40,16 @@ export const ButtonStyle = css<IButtonProps>`
   }
 
   ${(props) =>
-    props.white &&
-    !props.outline &&
+    props.$white &&
+    !props.$outline &&
     css`
       background-color: #fff;
       color: #000;
     `}
 
   ${(props) =>
-    props.white &&
-    props.outline &&
+    props.$white &&
+    props.$outline &&
     css`
       background-color: transparent;
       color: #fff;
@@ -58,7 +58,7 @@ export const ButtonStyle = css<IButtonProps>`
 
   ${(props) =>
     props.$primary &&
-    !props.outline &&
+    !props.$outline &&
     css`
       background-color: ${primary};
       border: 1px solid ${primary};
@@ -67,7 +67,7 @@ export const ButtonStyle = css<IButtonProps>`
 
     ${(props) =>
     props.$primary &&
-    props.outline &&
+    props.$outline &&
     css`
       background-color: transparent;
       border: 1px solid ${primary};

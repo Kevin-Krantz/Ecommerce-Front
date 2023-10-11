@@ -33,7 +33,7 @@ export default function ProductBox({
         <Title>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button $primary="true" outline="true">
+          <Button $primary="true" $outline="true">
             Add to cart
           </Button>
         </PriceRow>

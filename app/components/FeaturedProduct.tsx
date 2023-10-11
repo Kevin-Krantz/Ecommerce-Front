@@ -23,12 +23,12 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
               <ButtonsWrapper>
                 <ButtonLink
                   href={"/products/" + featuredProduct?._id}
-                  outline="true"
-                  white="true"
+                  $outline="true"
+                  $white="true"
                 >
                   Read more
                 </ButtonLink>
-                <Button white="true">
+                <Button $white="true">
                   <Cart />
                   Add to cart
                 </Button>
