@@ -3,8 +3,10 @@
 import Link from "next/link";
 import styled from "styled-components";
 import Center from "./Center";
+import { useCart } from "./CartContext";
 
 export default function Header() {
+  const { cartProducts } = useCart();
   return (
     <StyledHeader>
       <Center>
@@ -18,7 +20,7 @@ export default function Header() {
             <NavLink href="/products">All products</NavLink>
             <NavLink href="/categories">Categories</NavLink>
             <NavLink href="/account">Account</NavLink>
-            <NavLink href="/cart">Cart (0)</NavLink>
+            <NavLink href="/cart">Cart ({cartProducts.length})</NavLink>
           </StyledNav>
         </Wrapper>
       </Center>
