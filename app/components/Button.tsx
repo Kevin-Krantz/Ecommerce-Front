@@ -7,6 +7,10 @@ export default function Button({
   $outline: outline,
   $primary: primary,
   size,
+  $block: block,
+  $black: black,
+  type,
+  onClick,
   ...rest
 }: {
   children: React.ReactNode;
@@ -17,6 +21,10 @@ export default function Button({
       $outline={outline}
       $primary={primary}
       size={size}
+      $block={block}
+      $black={black}
+      type={type}
+      onClick={onClick}
       {...rest}
     >
       {children}
@@ -33,11 +41,19 @@ export const ButtonStyle = css<IButtonProps>`
   align-items: center;
   text-decoration: none;
   font-weight: 500;
+  font-family: inherit;
 
   svg {
     height: 16px;
     margin-right: 5px;
   }
+
+  ${(props) =>
+    props.$block &&
+    css`
+      display: block;
+      margin-right: 5px;
+    `}
 
   ${(props) =>
     props.$white &&
@@ -54,6 +70,23 @@ export const ButtonStyle = css<IButtonProps>`
       background-color: transparent;
       color: #fff;
       border: 1px solid #fff;
+    `}
+
+    ${(props) =>
+    props.$black &&
+    !props.$outline &&
+    css`
+      background-color: #000;
+      color: #fff;
+    `}
+
+  ${(props) =>
+    props.$black &&
+    props.$outline &&
+    css`
+      background-color: transparent;
+      color: #000;
+      border: 1px solid #000;
     `}
 
   ${(props) =>
