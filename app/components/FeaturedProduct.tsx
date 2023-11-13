@@ -6,12 +6,19 @@ import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import { IProduct } from "@/types/IProduct";
 import Cart from "./icons/Cart";
+import { useCart } from "./CartContext";
 
 interface Props {
-  featuredProduct: IProduct | null;
+  featuredProduct: IProduct;
 }
 
 export default function FeaturedProduct({ featuredProduct }: Props) {
+  const { addProduct } = useCart();
+
+  function addFeaturedToCart() {
+    addProduct(featuredProduct?._id);
+  }
+
   return (
     <Bg>
       <Center>
@@ -23,12 +30,12 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
               <ButtonsWrapper>
                 <ButtonLink
                   href={"/products/" + featuredProduct?._id}
-                  $outline="true"
-                  $white="true"
+                  $outline
+                  $white
                 >
                   Read more
                 </ButtonLink>
-                <Button $white="true">
+                <Button $white onClick={addFeaturedToCart}>
                   <Cart />
                   Add to cart
                 </Button>
