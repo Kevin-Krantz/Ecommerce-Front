@@ -1,7 +1,7 @@
 interface IButtonLinkProps {
-  $white?: string;
-  $outline?: string;
-  $primary?: string;
-  size?: "l";
+  $white?: boolean;
+  $outline?: boolean;
+  $primary?: boolean;
+  size?: string;
   href: string;
 }

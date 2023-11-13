@@ -7,4 +7,5 @@ export interface IProduct extends Document {
   images?: string[];
   category?: string;
   properties?: { [key: string]: any };
+  _id: string;
 }
