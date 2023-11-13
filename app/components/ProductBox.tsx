@@ -2,6 +2,9 @@
 
 import styled from "styled-components";
 import Button from "./Button";
+import Link from "next/link";
+import { useCart } from "./CartContext";
+import { useEffect } from "react";
 
 interface ProductBoxProps {
   title: string;
@@ -10,7 +13,7 @@ interface ProductBoxProps {
   images?: string[];
   category?: string;
   properties?: { [key: string]: any };
-  _id?: string;
+  _id: string;
 }
 
 export default function ProductBox({
@@ -22,18 +25,26 @@ export default function ProductBox({
   properties,
   _id,
 }: ProductBoxProps) {
+  const url = `/product/${_id}`;
+
+  const { addProduct } = useCart();
+
   return (
     <ProductWrapper>
-      <WhiteBox>
+      <WhiteBox href={url}>
         <div>
           <img src={images && images[0]} alt="" />
         </div>
       </WhiteBox>
       <ProductInfoBox>
-        <Title>{title}</Title>
+        <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>${price}</Price>
-          <Button $primary="true" $outline="true">
+          <Button
+            $primary={true}
+            $outline={true}
+            onClick={() => addProduct(_id)}
+          >
             Add to cart
           </Button>
         </PriceRow>
@@ -44,7 +55,7 @@ export default function ProductBox({
 
 const ProductWrapper = styled.div``;
 
-const WhiteBox = styled.div`
+const WhiteBox = styled(Link)`
   background-color: #fff;
   padding: 20px;
   height: 150px;
@@ -60,9 +71,11 @@ const WhiteBox = styled.div`
   }
 `;
 
-const Title = styled.h2`
+const Title = styled(Link)`
   font-weight: normal;
   font-size: 0.9rem;
+  color: inherit;
+  text-decoration: none;
   margin: 0;
 `;
 
@@ -79,5 +92,5 @@ const PriceRow = styled.div`
 
 const Price = styled.div`
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 600;
 `;
