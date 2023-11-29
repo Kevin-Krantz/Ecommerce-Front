@@ -21,3 +21,12 @@ export async function getData(
     allProducts: JSON.parse(JSON.stringify(allProducts)),
   };
 }
+
+export async function getProductById(productId: string) {
+  await mongooseConnect();
+  const product = await Product.findById(productId);
+
+  return {
+    product: JSON.parse(JSON.stringify(product)),
+  };
+}
