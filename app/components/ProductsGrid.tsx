@@ -9,9 +9,7 @@ interface Props {
 export default function ProductsGrid({ products }: Props) {
   return (
     <StyledProductsGrid>
-      {products.map((p) => (
-        <ProductBox key={p._id} {...p} />
-      ))}
+      {products && products.map((p) => <ProductBox key={p._id} {...p} />)}
     </StyledProductsGrid>
   );
 }
