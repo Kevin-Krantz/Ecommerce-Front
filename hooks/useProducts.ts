@@ -10,7 +10,7 @@ export const useProducts = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const result = await axios.get("/api/customProducts");
+        const result = await axios.get("/api/products");
         setFeatured(result.data.featuredProduct);
         setProducts(result.data.newProducts);
         setAllProducts(result.data.allProducts);
