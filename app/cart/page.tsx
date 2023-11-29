@@ -12,6 +12,7 @@ import Table from "../components/Table";
 import Input from "../components/Input";
 import checkout from "../actions/checkout";
 import { useRouter, useSearchParams } from "next/navigation";
+import WhiteBox from "../components/WhiteBox";
 
 export default function CartPage() {
   const router = useRouter();
@@ -72,10 +73,10 @@ export default function CartPage() {
         <Header />
         <Center>
           <ColumnsWrapper>
-            <Box>
+            <WhiteBox>
               <h1>Thanks for your order!</h1>
               <p>We will email you the order details.</p>
-            </Box>
+            </WhiteBox>
           </ColumnsWrapper>
         </Center>
       </>
@@ -86,7 +87,7 @@ export default function CartPage() {
       <Header />
       <Center>
         <ColumnsWrapper>
-          <Box>
+          <WhiteBox>
             <h2>Cart</h2>
             {!cartProducts.length && <div>Your cart is empty</div>}
             {products.length > 0 && (
@@ -137,9 +138,9 @@ export default function CartPage() {
                 </tbody>
               </Table>
             )}
-          </Box>
+          </WhiteBox>
           {!!cartProducts.length && (
-            <Box>
+            <WhiteBox>
               <h2>Order information</h2>
               <form method="post" onSubmit={handleSubmit}>
                 <Input
@@ -207,7 +208,7 @@ export default function CartPage() {
                   Continue to payment
                 </Button>
               </form>
-            </Box>
+            </WhiteBox>
           )}
         </ColumnsWrapper>
       </Center>
@@ -220,12 +221,6 @@ const ColumnsWrapper = styled.div`
   grid-template-columns: 1.3fr 0.7fr;
   gap: 40px;
   margin-top: 40px;
-`;
-
-const Box = styled.div`
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 30px;
 `;
 
 const ProductInfoCell = styled.td`
