@@ -6,7 +6,7 @@ import Product from "@/models/Product";
 import { revalidatePath } from "next/cache";
 import Stripe from "stripe";
 
-const stripe = new Stripe(process.env.STRIPE_SK as string, {
+const stripe = new Stripe(process.env.STRIPE_SK, {
   apiVersion: "2023-10-16",
 });
 
