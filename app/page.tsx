@@ -5,15 +5,36 @@ import FeaturedProduct from "./components/FeaturedProduct";
 import Header from "./components/Header";
 import NewProducts from "./components/NewProducts";
 import { IProduct } from "@/types/IProduct";
+import Footer from "./components/Footer";
+import LoadingSpinner from "./components/icons/LoadingSpinner";
 
 export default function Home() {
   const { products, featured } = useProducts();
+
+  if (!products && !featured) {
+    return (
+      <>
+        <Header />
+        <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <LoadingSpinner color="#000" />
+        </div>
+      </>
+    );
+  }
 
   return (
     <div>
       <Header />
       <FeaturedProduct featuredProduct={featured as IProduct} />
-      <NewProducts newProducts={products} />
+      <NewProducts newProducts={products as IProduct[]} />
+      <Footer />
     </div>
   );
 }
