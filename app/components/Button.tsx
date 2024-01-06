@@ -42,6 +42,7 @@ export const ButtonStyle = css<IButtonProps>`
   text-decoration: none;
   font-weight: 500;
   font-family: inherit;
+  transition: transform 40ms linear;
 
   svg {
     height: 16px;
@@ -61,6 +62,14 @@ export const ButtonStyle = css<IButtonProps>`
     css`
       background-color: #fff;
       color: #000;
+
+      &:hover {
+        transform: scale(1.07);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
     `}
 
   ${(props) =>
@@ -70,6 +79,14 @@ export const ButtonStyle = css<IButtonProps>`
       background-color: transparent;
       color: #fff;
       border: 1px solid #fff;
+
+      &:hover {
+        transform: scale(1.07);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
     `}
 
     ${(props) =>
@@ -105,6 +122,14 @@ export const ButtonStyle = css<IButtonProps>`
       background-color: transparent;
       border: 1px solid ${primary};
       color: ${primary};
+
+      &:hover {
+        transform: scale(1.07);
+      }
+
+      &:active {
+        transform: scale(1);
+      }
     `}
 
   ${(props) =>
