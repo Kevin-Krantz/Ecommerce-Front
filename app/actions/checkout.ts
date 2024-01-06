@@ -59,8 +59,8 @@ export default async function checkout(formData: FormData) {
     line_items,
     mode: "payment",
     customer_email: email as string,
-    success_url: (process.env.PUBLIC_URL as string) + "/cart?success=1",
-    cancel_url: (process.env.PUBLIC_URL as string) + "/cart?canceled=1",
+    success_url: process.env.PUBLIC_URL + "/cart?success=1",
+    cancel_url: process.env.PUBLIC_URL + "/cart?canceled=1",
     metadata: { orderId: orderDoc._id.toString() },
   });
 
