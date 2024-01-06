@@ -13,6 +13,7 @@ import Input from "../components/Input";
 import checkout from "../actions/checkout";
 import { useRouter, useSearchParams } from "next/navigation";
 import WhiteBox from "../components/WhiteBox";
+import Footer from "../components/Footer";
 
 export default function CartPage() {
   const router = useRouter();
@@ -25,6 +26,14 @@ export default function CartPage() {
   const [postalCode, setPostalCode] = useState<string>("");
   const [streetAddress, setStreetAddress] = useState<string>("");
   const [country, setCountry] = useState<string>("");
+
+  console.log(
+    cartProducts,
+    "cartprodukter!?",
+    cartProducts.length,
+    "<- length?"
+  );
+  console.log(products, "produkter!?", products.length, " <- length?");
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -79,6 +88,7 @@ export default function CartPage() {
             </WhiteBox>
           </ColumnsWrapper>
         </Center>
+        <Footer />
       </>
     );
   }
@@ -87,10 +97,10 @@ export default function CartPage() {
       <Header />
       <Center>
         <ColumnsWrapper>
-          <WhiteBox>
-            <h2>Cart</h2>
-            {!cartProducts.length && <div>Your cart is empty</div>}
-            {products.length > 0 && (
+          <WhiteBox style={{ padding: "24px 16px 24px 16px" }}>
+            <h2>Kundvagn</h2>
+            {!cartProducts.length && <div>Din kundvagn är tom {":("}</div>}
+            {products.length > 0 && cartProducts.length > 0 && (
               <Table>
                 <thead>
                   <tr>
@@ -140,7 +150,7 @@ export default function CartPage() {
             )}
           </WhiteBox>
           {!!cartProducts.length && (
-            <WhiteBox>
+            <WhiteBox style={{ padding: "24px 16px 24px 16px" }}>
               <h2>Order information</h2>
               <form method="post" onSubmit={handleSubmit}>
                 <Input
@@ -212,6 +222,7 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
+      <Footer />
     </>
   );
 }
