@@ -18,4 +18,7 @@ const StyledProductsGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   gap: 20px;
+  text-align: center;
+  width: max-content;
+  margin-bottom: 20px;
 `;
