@@ -11,7 +11,7 @@ interface Props {
 export default function NewProducts({ newProducts }: Props) {
   return (
     <Center>
-      <Title>New Arrivals</Title>
+      <Title>Nya Produkter</Title>
       <ProductsGrid products={newProducts} />
     </Center>
   );
