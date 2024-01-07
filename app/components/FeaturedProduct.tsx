@@ -7,6 +7,8 @@ import ButtonLink from "./ButtonLink";
 import { IProduct } from "@/types/IProduct";
 import Cart from "./icons/Cart";
 import { useCart } from "./CartContext";
+import ReadMore from "./icons/ReadMore";
+import LoadingSpinner from "./icons/LoadingSpinner";
 
 interface Props {
   featuredProduct: IProduct;
@@ -14,6 +16,12 @@ interface Props {
 
 export default function FeaturedProduct({ featuredProduct }: Props) {
   const { addProduct } = useCart();
+
+  if (!featuredProduct) {
+    return null;
+  }
+
+  const { _id, title, description, images } = featuredProduct;
 
   function addFeaturedToCart() {
     addProduct(featuredProduct?._id);
@@ -25,25 +33,21 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
         <ColumnsWrapper>
           <Column>
             <div>
-              <Title>{featuredProduct?.title}</Title>
-              <Desc>{featuredProduct?.description}</Desc>
+              <Title>{title}</Title>
+              <Desc>{description}</Desc>
               <ButtonsWrapper>
-                <ButtonLink
-                  href={"/products/" + featuredProduct?._id}
-                  $outline
-                  $white
-                >
-                  Read more
+                <ButtonLink href={"/product/" + _id} $outline $white>
+                  Läs mer <ReadMore />
                 </ButtonLink>
                 <Button $white onClick={addFeaturedToCart}>
                   <Cart />
-                  Add to cart
+                  Lägg i kundvagn
                 </Button>
               </ButtonsWrapper>
             </div>
           </Column>
           <Column>
-            <img src={featuredProduct?.images && featuredProduct.images[0]} />{" "}
+            <img src={images && images[0]} />
           </Column>
         </ColumnsWrapper>
       </Center>
@@ -79,9 +83,22 @@ const Title = styled.h1`
   font-size: 3rem;
 `;
 
-const Desc = styled.p`
-  color: #aaa;
+const Desc = styled.div`
+  color: white;
   font-size: 0.8rem;
+  position: relative;
+  max-height: 5rem;
+  overflow: hidden;
+
+  &:before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: linear-gradient(transparent 0, #191716);
+  }
 `;
 
 const ButtonsWrapper = styled.div`
