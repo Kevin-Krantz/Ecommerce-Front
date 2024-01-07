@@ -5,6 +5,8 @@ import Button from "./Button";
 import Link from "next/link";
 import { useCart } from "./CartContext";
 import { useEffect } from "react";
+import { primary } from "@/lib/colors";
+import Cart from "./icons/Cart";
 
 interface ProductBoxProps {
   title: string;
@@ -45,7 +47,7 @@ export default function ProductBox({
             $outline={true}
             onClick={() => addProduct(_id)}
           >
-            Add to cart
+            <Cart /> Lägg i kundvagn
           </Button>
         </PriceRow>
       </ProductInfoBox>
@@ -59,7 +61,6 @@ const WhiteBox = styled(Link)`
   background-color: #fff;
   padding: 20px;
   height: 150px;
-  text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +68,15 @@ const WhiteBox = styled(Link)`
 
   img {
     max-width: 100%;
-    max-height: 80px;
+    max-height: 100px;
+    transition: transform 70ms linear, filter 70ms linear;
+  }
+
+  &:hover {
+    img {
+      transform: scale(1.2);
+      filter: saturate(2);
+    }
   }
 `;
 
@@ -84,13 +93,24 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: flex;
+  display: block;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    gap: 5px;
+    justify-content: space-around;
+  }
   align-items: center;
   justify-content: space-between;
-  margin-top: 4px;
+  margin-top: 8px;
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: right;
+  @media screen and (min-width: 768px) {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: left;
+  }
 `;
