@@ -3,7 +3,7 @@ import { IProduct } from "@/types/IProduct";
 import axios from "axios";
 
 export const useProducts = () => {
-  const [products, setProducts] = useState<IProduct[]>([]);
+  const [products, setProducts] = useState<IProduct[] | null>(null);
   const [featured, setFeatured] = useState<IProduct | null>(null);
   const [allProducts, setAllProducts] = useState<IProduct[] | null>(null);
 
