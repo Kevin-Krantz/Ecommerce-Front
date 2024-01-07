@@ -63,17 +63,19 @@ export function CartContextProvider({
   }, []);
 
   const removeProduct = useCallback((productId: string) => {
-    if (productId) {
-      setCartProducts((prev) => {
-        const index = prev.indexOf(productId);
-        if (index !== -1) {
-          const newCartProducts = prev.slice();
-          newCartProducts.splice(index, 1);
-          return newCartProducts;
+    setCartProducts((prev) => {
+      const newCartProducts = [...prev];
+      const indices = newCartProducts.reduce<number[]>((acc, item, index) => {
+        if (item === productId) {
+          acc.push(index);
         }
-        return prev;
-      });
-    }
+        return acc;
+      }, []);
+      if (indices.length) {
+        newCartProducts.splice(indices[indices.length - 1], 1);
+      }
+      return newCartProducts;
+    });
   }, []);
 
   const clearCart = useCallback(() => {
