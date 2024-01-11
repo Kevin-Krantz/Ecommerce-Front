@@ -27,14 +27,6 @@ export default function CartPage() {
   const [streetAddress, setStreetAddress] = useState<string>("");
   const [country, setCountry] = useState<string>("");
 
-  console.log(
-    cartProducts,
-    "cartprodukter!?",
-    cartProducts.length,
-    "<- length?"
-  );
-  console.log(products, "produkter!?", products.length, " <- length?");
-
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post("/api/cart", { ids: cartProducts }).then((res) => {
