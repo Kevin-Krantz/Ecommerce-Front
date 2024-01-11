@@ -7,6 +7,7 @@ import { useCart } from "./CartContext";
 import { useEffect } from "react";
 import { primary } from "@/lib/colors";
 import Cart from "./icons/Cart";
+import Cartv2 from "./icons/Cartv2";
 
 interface ProductBoxProps {
   title: string;
@@ -47,7 +48,8 @@ export default function ProductBox({
             $outline={true}
             onClick={() => addProduct(_id)}
           >
-            <Cart /> Lägg i kundvagn
+            <span className="add-to-cart">Lägg i kundvagn</span>
+            <span className="added-to-cart">Tillagd!</span>
           </Button>
         </PriceRow>
       </ProductInfoBox>
@@ -55,7 +57,13 @@ export default function ProductBox({
   );
 }
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+  background-color: #2625241b;
+  height: initial;
+  width: initial;
+  border-radius: 15px;
+  padding: 10px;
+`;
 
 const WhiteBox = styled(Link)`
   background-color: #fff;
@@ -68,13 +76,13 @@ const WhiteBox = styled(Link)`
 
   img {
     max-width: 100%;
-    max-height: 100px;
+    max-height: 120px;
     transition: transform 70ms linear, filter 70ms linear;
   }
 
   &:hover {
     img {
-      transform: scale(1.2);
+      transform: scale(1.1);
       filter: saturate(2);
     }
   }
@@ -86,6 +94,10 @@ const Title = styled(Link)`
   color: inherit;
   text-decoration: none;
   margin: 0;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 1rem;
+  }
 `;
 
 const ProductInfoBox = styled.div`
@@ -102,6 +114,15 @@ const PriceRow = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 8px;
+
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+  }
 `;
 
 const Price = styled.div`
@@ -112,5 +133,10 @@ const Price = styled.div`
     font-size: 1.2rem;
     font-weight: 600;
     text-align: left;
+  }
+
+  @media only screen and (max-width: 600px) {
+    font-weight: 700;
+    text-align: center;
   }
 `;
