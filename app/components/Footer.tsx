@@ -101,6 +101,12 @@ const SocialIcons = styled.div`
   & > *:not(:last-child) {
     margin-right: 20px;
   }
+
+  @media only screen and (max-width: 600px) {
+    & > *:not(:last-child) {
+      margin-right: 0;
+    }
+  }
 `;
 
 const CopyRight = styled.div`
