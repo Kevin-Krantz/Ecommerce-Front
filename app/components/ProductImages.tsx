@@ -21,8 +21,6 @@ export default function ProductImages({ images }: Props) {
     }
   }, [images]);
 
-  console.log(activeImage, "activeImage");
-
   const handleKeyDown = useCallback((event: KeyboardEvent) => {
     const currentImages = imagesRef.current;
     if (!currentImages || currentImages.length === 0) return;
