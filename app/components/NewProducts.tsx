@@ -10,10 +10,10 @@ interface Props {
 
 export default function NewProducts({ newProducts }: Props) {
   return (
-    <Center>
+    <Container>
       <Title>Nya Produkter</Title>
       <ProductsGrid products={newProducts} />
-    </Center>
+    </Container>
   );
 }
 
@@ -21,4 +21,9 @@ const Title = styled.h2`
   font-size: 2rem;
   margin: 30px 0 20px;
   font-weight: normal;
+`;
+
+const Container = styled.div`
+  max-width: fit-content;
+  margin: 0 auto;
 `;
