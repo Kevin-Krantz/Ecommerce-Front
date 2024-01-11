@@ -37,7 +37,7 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
               <Desc>{description}</Desc>
               <ButtonsWrapper>
                 <ButtonLink href={"/product/" + _id} $outline $white>
-                  Läs mer <ReadMore />
+                  <span>Läs mer</span>
                 </ButtonLink>
                 <Button $white onClick={addFeaturedToCart}>
                   <Cart />
