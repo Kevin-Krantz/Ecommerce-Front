@@ -4,14 +4,12 @@ import Link from "next/link";
 import styled, { keyframes } from "styled-components";
 import { useCart } from "./CartContext";
 import { useEffect, useRef, useState } from "react";
-import Hamburger from "./icons/Hamburger";
+import StyledHamburger from "./icons/Hamburger";
 
 export default function Header() {
   const { cartProducts } = useCart();
   const [animate, setAnimate] = useState(false);
   const [showNav, setShowNav] = useState(false);
-
-  console.log(showNav);
 
   function usePrevious<T>(value: T): T | undefined {
     const ref = useRef<T>();
@@ -53,7 +51,7 @@ export default function Header() {
           $shownav={showNav}
           onClick={() => setShowNav((prev) => !prev)}
         >
-          <Hamburger />
+          <StyledHamburger />
         </NavButton>
       </Wrapper>
     </StyledHeader>
@@ -78,18 +76,19 @@ const NavButton = styled.button<ActiveProps>`
   color: #aaa;
   cursor: pointer;
   position: absolute;
-  right: 0;
-  top: 4px;
+  right: 4px;
+  top: 0;
   transition: all 0.2s;
   z-index: 2;
-
-  &:hover {
-    color: #fff;
-    outline: 0;
-  }
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  scale: 0.5;
 
   &:active {
     color: black;
+  }
+
+  @media only screen and (max-width: 600px) {
+    position: ${({ $shownav }) => ($shownav ? "fixed" : "absolute")};
   }
 
   @media screen and (min-width: 768px) {
@@ -126,7 +125,7 @@ const LogoWrapper = styled.div<ActiveProps>`
     transform: ${({ $shownav }) =>
       $shownav ? "translateX(0%)" : "translateX(-110%)"};
     transition: transform 0.2s ease;
-    position: fixed;
+    /* position: fixed; */
     top: 10px;
   }
 `;
