@@ -5,7 +5,7 @@ import Cartv2 from "./icons/Cartv2";
 
 const AddToCartAnimationStyle = css`
   &.add-to-cart-button {
-    background: #333332;
+    background: #041625;
     border: none;
     border-radius: 8px;
     -webkit-box-shadow: 0 3px 13px -2px rgba(0, 0, 0, 0.15);
@@ -25,7 +25,7 @@ const AddToCartAnimationStyle = css`
 
     @media only screen and (max-width: 600px) {
       width: 200px;
-      height: 50px;
+      height: 40px;
     }
 
     &:hover {
@@ -63,7 +63,7 @@ const AddToCartAnimationStyle = css`
         top: 16px;
 
         @media only screen and (max-width: 600px) {
-          top: 23px;
+          top: 19px;
         }
       }
 
