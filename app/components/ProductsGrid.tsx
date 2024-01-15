@@ -21,4 +21,14 @@ const StyledProductsGrid = styled.div`
   text-align: center;
   width: max-content;
   margin-bottom: 20px;
+
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: stretch;
+  }
 `;
