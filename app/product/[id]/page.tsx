@@ -4,6 +4,7 @@ import Button from "@/app/components/Button";
 import { useCart } from "@/app/components/CartContext";
 import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
+import MobileFooter from "@/app/components/MobileFooter";
 import ProductImages from "@/app/components/ProductImages";
 import Title from "@/app/components/Title";
 import WhiteBox from "@/app/components/WhiteBox";
@@ -64,7 +65,6 @@ export default function ProductPage() {
               </div>
               <div>
                 <Button $primary $outline onClick={() => addProduct(id)}>
-                  <Cart />
                   Lägg i kundvagn
                 </Button>
               </div>
@@ -72,6 +72,7 @@ export default function ProductPage() {
           </div>
         </ColWrapper>
       </Center>
+      <MobileFooter />
       <Footer />
     </>
   );
@@ -89,6 +90,11 @@ const ColWrapper = styled.div`
   gap: 40px;
   margin-top: 16px;
   margin-bottom: 16px;
+
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const PriceRow = styled.div`
