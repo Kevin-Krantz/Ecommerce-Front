@@ -53,7 +53,9 @@ export default function ProductImages({ images }: Props) {
     <>
       <SliderWrapper>
         <ImagesContainer
-          style={{ transform: `translateX(${sliderPosition}px)` }}
+          $currentIndex={currentIndex}
+          $imageWidth={imageWidth}
+          $sliderPosition={sliderPosition}
         >
           {images?.map((image) => (
             <Slide key={image}>
@@ -84,28 +86,55 @@ interface ActiveProps {
   $active: boolean;
 }
 
+interface SliderProps {
+  $imageWidth: number;
+  $currentIndex: number;
+  $sliderPosition: number;
+}
+
 const SliderWrapper = styled.div`
   overflow: hidden;
   width: 360px;
   height: 250px;
   margin: auto;
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+    height: auto;
+  }
 `;
 
-const ImagesContainer = styled.div`
+const ImagesContainer = styled.div<SliderProps>`
   display: flex;
   transition: transform 0.2s ease-in-out;
+  transform: ${({ $sliderPosition }) => `translateX(${$sliderPosition}px)`};
+
+  @media only screen and (max-width: 600px) {
+    transform: ${({ $currentIndex }) =>
+      `translateX(${$currentIndex * -300}px)`};
+  }
 `;
 
 const Slide = styled.div`
   flex: 0 0 auto;
   width: 360px;
   height: 250px;
+
+  @media only screen and (max-width: 600px) {
+    width: auto;
+    height: auto;
+  }
 `;
 
 const BigImage = styled.img`
   width: 360px;
   height: 250px;
   object-fit: contain;
+
+  @media only screen and (max-width: 600px) {
+    width: 300px;
+    height: 300px;
+  }
 `;
 
 const Image = styled.img`
@@ -118,6 +147,10 @@ const ImageButtons = styled.div`
   gap: 10px;
   margin-top: 10px;
   justify-content: center;
+
+  @media only screen and (max-width: 600px) {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  }
 `;
 
 const ImageButton = styled.div<ActiveProps>`
