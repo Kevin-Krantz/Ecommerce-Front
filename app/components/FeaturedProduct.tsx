@@ -39,8 +39,7 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
                 <ButtonLink href={"/product/" + _id} $outline $white>
                   <span>Läs mer</span>
                 </ButtonLink>
-                <Button $white onClick={addFeaturedToCart}>
-                  <Cart />
+                <Button $outline $primary onClick={addFeaturedToCart}>
                   Lägg i kundvagn
                 </Button>
               </ButtonsWrapper>
@@ -66,6 +65,15 @@ const ColumnsWrapper = styled.div`
   grid-template-columns: 1.1fr 0.9fr;
   align-items: center;
   gap: 50px;
+
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+
+    div:nth-child(1) {
+      order: 2;
+    }
+  }
 
   img {
     max-width: 100%;
@@ -105,4 +113,8 @@ const ButtonsWrapper = styled.div`
   display: flex;
   gap: 10px;
   margin-top: 25px;
+
+  @media only screen and (max-width: 600px) {
+    justify-content: center;
+  }
 `;
