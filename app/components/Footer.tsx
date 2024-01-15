@@ -58,6 +58,12 @@ const FooterContainer = styled.footer`
   background-color: #191716;
   padding: 1rem;
   text-align: center;
+
+  @media only screen and (max-width: 600px) {
+    position: relative;
+    margin-bottom: 79px;
+    z-index: -1;
+  }
 `;
 
 const FooterGrid = styled.div`
