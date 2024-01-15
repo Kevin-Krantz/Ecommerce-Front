@@ -8,4 +8,9 @@ const StyledDiv = styled.div`
   max-width: 800px;
   margin: 0 auto;
   padding: 0 20px;
+
+  @media only screen and (max-width: 600px) {
+    padding: unset;
+    text-align: center;
+  }
 `;
