@@ -7,4 +7,5 @@ interface IButtonProps {
   $black?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   type?: string;
+  $isAdded?: boolean;
 }
