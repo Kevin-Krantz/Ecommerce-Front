@@ -26,4 +26,8 @@ const Title = styled.h2`
 const Container = styled.div`
   max-width: fit-content;
   margin: 0 auto;
+
+  @media only screen and (max-width: 600px) {
+    text-align: center;
+  }
 `;
