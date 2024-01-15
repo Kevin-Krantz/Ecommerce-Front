@@ -58,11 +58,18 @@ export default function ProductBox({
 }
 
 const ProductWrapper = styled.div`
-  background-color: #2625241b;
+  background-color: #fff;
   height: initial;
   width: initial;
   border-radius: 15px;
   padding: 10px;
+
+  @media only screen and (max-width: 600px) {
+    border-bottom: 1px solid #bab2b2;
+    padding: 20px;
+    flex: 1 1 100%;
+    border-radius: 0;
+  }
 `;
 
 const WhiteBox = styled(Link)`
@@ -74,10 +81,18 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   border-radius: 10px;
 
+  @media only screen and (max-width: 600px) {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  }
+
   img {
     max-width: 100%;
     max-height: 120px;
     transition: transform 70ms linear, filter 70ms linear;
+
+    @media only screen and (max-width: 600px) {
+      max-height: 170px;
+    }
   }
 
   &:hover {
@@ -96,7 +111,10 @@ const Title = styled(Link)`
   margin: 0;
 
   @media only screen and (max-width: 600px) {
-    font-size: 1rem;
+    font-size: larger;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    font-weight: bolder;
+    //asdasdasdasdasdasdasd
   }
 `;
 
@@ -118,9 +136,6 @@ const PriceRow = styled.div`
   @media only screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    align-items: center;
-    justify-content: center;
     gap: 5px;
   }
 `;
@@ -136,7 +151,6 @@ const Price = styled.div`
   }
 
   @media only screen and (max-width: 600px) {
-    font-weight: 700;
-    text-align: center;
+    font-weight: bolder;
   }
 `;
