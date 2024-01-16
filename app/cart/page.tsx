@@ -14,6 +14,7 @@ import checkout from "../actions/checkout";
 import { useRouter, useSearchParams } from "next/navigation";
 import WhiteBox from "../components/WhiteBox";
 import Footer from "../components/Footer";
+import MobileFooter from "../components/MobileFooter";
 
 export default function CartPage() {
   const router = useRouter();
@@ -80,6 +81,7 @@ export default function CartPage() {
             </WhiteBox>
           </ColumnsWrapper>
         </Center>
+        <MobileFooter />
         <Footer />
       </>
     );
@@ -214,6 +216,7 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
+      <MobileFooter />
       <Footer />
     </>
   );
@@ -224,6 +227,10 @@ const ColumnsWrapper = styled.div`
   grid-template-columns: 1.3fr 0.7fr;
   gap: 40px;
   margin-top: 40px;
+
+  @media only screen and (max-width: 600px) {
+    margin-bottom: 8px;
+  }
 `;
 
 const ProductInfoCell = styled.td`
