@@ -7,6 +7,7 @@ import NewProducts from "./components/NewProducts";
 import { IProduct } from "@/types/IProduct";
 import Footer from "./components/Footer";
 import LoadingSpinner from "./components/icons/LoadingSpinner";
+import MobileFooter from "./components/MobileFooter";
 
 export default function Home() {
   const { products, featured } = useProducts();
@@ -25,6 +26,7 @@ export default function Home() {
         >
           <LoadingSpinner color="#000" />
         </div>
+        <MobileFooter />
       </>
     );
   }
@@ -34,6 +36,7 @@ export default function Home() {
       <Header />
       <FeaturedProduct featuredProduct={featured as IProduct} />
       <NewProducts newProducts={products as IProduct[]} />
+      <MobileFooter />
       <Footer />
     </div>
   );
