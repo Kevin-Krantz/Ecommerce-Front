@@ -4,6 +4,7 @@ import React, {
   useState,
   useCallback,
   useEffect,
+  useMemo,
 } from "react";
 
 type CartContextType = {
@@ -82,16 +83,19 @@ export function CartContextProvider({
     localStorage.setItem("cart", JSON.stringify([]));
   }, []);
 
+  const providerValue = useMemo(
+    () => ({
+      cartProducts,
+      setCartProducts,
+      addProduct,
+      removeProduct,
+      clearCart,
+    }),
+    [cartProducts, addProduct, removeProduct, clearCart]
+  );
+
   return (
-    <CartContext.Provider
-      value={{
-        cartProducts,
-        setCartProducts,
-        addProduct,
-        removeProduct,
-        clearCart,
-      }}
-    >
+    <CartContext.Provider value={providerValue}>
       {children}
     </CartContext.Provider>
   );
