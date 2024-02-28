@@ -4,9 +4,9 @@ export interface IOrder extends Document {
   line_items: object;
   name: string;
   email: string;
-  city: string;
+  phone: string;
   postalCode: string;
   streetAddress: string;
-  country: string;
+  town: string;
   paid: boolean;
 }
