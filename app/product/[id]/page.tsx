@@ -6,10 +6,8 @@ import Footer from "@/app/components/Footer";
 import Header from "@/app/components/Header";
 import MobileFooter from "@/app/components/MobileFooter";
 import ProductImages from "@/app/components/ProductImages";
-import Title from "@/app/components/Title";
 import WhiteBox from "@/app/components/WhiteBox";
 import Accordion from "@/app/components/common/Accordion";
-import Cart from "@/app/components/icons/Cart";
 import LoadingSpinner from "@/app/components/icons/LoadingSpinner";
 import { useProduct } from "@/hooks/useProduct";
 import { useParams } from "next/navigation";
@@ -34,6 +32,7 @@ export default function ProductPage() {
         >
           <LoadingSpinner color="#000" />
         </div>
+        <MobileFooter />
       </>
     );
   }
@@ -42,15 +41,7 @@ export default function ProductPage() {
     <>
       <Header />
       <Center>
-        <Title
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "16px",
-          }}
-        >
-          {product?.title}
-        </Title>
+        <StyledH1>{product?.title}</StyledH1>
         <ColWrapper>
           <WhiteBox>
             <ProductImages images={product?.images} />
@@ -79,8 +70,21 @@ export default function ProductPage() {
 }
 
 const Center = styled.div`
-  margin: 0 auto;
+  margin: 0 auto 8px auto;
   padding: 0 20px;
+`;
+
+const StyledH1 = styled.h1`
+  font-size: 1.5em;
+  margin-block: unset;
+  margin-inline: unset;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  margin-top: 16px;
+
+  @media only screen and (max-width: 600px) {
+  }
 `;
 
 const ColWrapper = styled.div`
@@ -94,6 +98,9 @@ const ColWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     display: flex;
     flex-direction: column;
+    /* grid-template-columns: unset;
+    grid-auto-rows: unset;
+    display: unset; */
   }
 `;
 
@@ -101,6 +108,11 @@ const PriceRow = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
+
+  @media only screen and (max-width: 600px) {
+    flex-direction: column;
+    gap: 8px;
+  }
 `;
 
 const Price = styled.span`
