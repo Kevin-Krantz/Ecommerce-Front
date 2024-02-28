@@ -11,4 +11,5 @@ const StyledInput = styled.input`
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+  height: min-content;
 `;
