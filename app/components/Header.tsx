@@ -5,11 +5,17 @@ import styled, { keyframes } from "styled-components";
 import { useCart } from "./CartContext";
 import { useEffect, useRef, useState } from "react";
 import StyledHamburger from "./icons/Hamburger";
+import { useBodyScrollLock } from "@/hooks/useNavScroll";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
+  const pathName = usePathname();
   const { cartProducts } = useCart();
   const [animate, setAnimate] = useState(false);
   const [showNav, setShowNav] = useState(false);
+  const [activeLink, setActiveLink] = useState(false);
+
+  useBodyScrollLock(showNav);
 
   function usePrevious<T>(value: T): T | undefined {
     const ref = useRef<T>();
@@ -39,12 +45,23 @@ export default function Header() {
           <Logo href="/">Lekbubblan</Logo>
         </LogoWrapper>
         <StyledNav $shownav={showNav}>
-          <NavLink href="/">Hem</NavLink>
-          <NavLink href="/products">Produkter</NavLink>
+          <NavLink $activeLink={pathName === "/"} href="/">
+            Hem
+          </NavLink>
+          <NavLink
+            $activeLink={pathName?.includes("/products")}
+            href="/products"
+          >
+            Produkter
+          </NavLink>
           <NavLink href="/categories">Kategorier</NavLink>
           <NavLink href="/account">Konto</NavLink>
-          <NavLink href="/cart" className={animate ? "jump" : ""}>
-            Varukorg ({cartProducts.length})
+          <NavLink
+            $activeLink={pathName?.includes("/cart")}
+            href="/cart"
+            className={animate ? "jump" : ""}
+          >
+            Kundvagn ({cartProducts.length})
           </NavLink>
         </StyledNav>
         <NavButton
@@ -59,7 +76,8 @@ export default function Header() {
 }
 
 interface ActiveProps {
-  $shownav: boolean;
+  $shownav?: boolean;
+  $activeLink?: boolean;
 }
 
 const jumpAnimation = keyframes`
@@ -142,11 +160,12 @@ const Logo = styled(Link)`
 
 const StyledNav = styled.nav<ActiveProps>`
   display: flex;
-  gap: 24px;
   font-size: large;
+  gap: 28px;
 
   @media only screen and (max-width: 600px) {
     flex-direction: column;
+    row-gap: 50px;
     background-color: #191716;
     z-index: 1;
     position: fixed;
@@ -158,10 +177,11 @@ const StyledNav = styled.nav<ActiveProps>`
       $shownav ? "translateX(0%)" : "translateX(-100%)"};
     transition: transform 0.2s ease;
     padding: 90px 20px 20px;
+    align-items: center;
   }
 `;
 
-const NavLink = styled(Link)`
+const NavLink = styled(Link)<ActiveProps>`
   color: #aaa;
   text-decoration: none;
   transition: all 0.2s;
@@ -177,5 +197,11 @@ const NavLink = styled(Link)`
 
   &.jump {
     animation: ${jumpAnimation} 0.5s ease;
+  }
+
+  @media only screen and (max-width: 600px) {
+    ${({ $activeLink }) =>
+      $activeLink &&
+      "background-color: #777373; padding: 8px 50px; border: solid 1px white"};
   }
 `;
