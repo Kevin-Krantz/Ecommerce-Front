@@ -89,6 +89,10 @@ const Title = styled.h1`
   margin: 0;
   font-weight: normal;
   font-size: 3rem;
+
+  @media only screen and (max-width: 600px) {
+    font-size: 2rem;
+  }
 `;
 
 const Desc = styled.div`
