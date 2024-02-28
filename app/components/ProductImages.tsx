@@ -1,6 +1,12 @@
 import { IProduct } from "@/types/IProduct";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { Swiper, SwiperSlide, SwiperRef } from "swiper/react";
+import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 interface Props {
   images: IProduct["images"];
@@ -9,11 +15,6 @@ interface Props {
 export default function ProductImages({ images }: Props) {
   const [activeImage, setActiveImage] = useState<string | undefined>();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const imagesRef = useRef<IProduct["images"]>(images);
-
-  useEffect(() => {
-    imagesRef.current = images;
-  }, [images]);
 
   useEffect(() => {
     if (images && images.length > 0) {
@@ -21,49 +22,35 @@ export default function ProductImages({ images }: Props) {
     }
   }, [images]);
 
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    const currentImages = imagesRef.current;
-    if (!currentImages || currentImages.length === 0) return;
+  const swiperRef = useRef<SwiperRef>(null);
 
-    if (event.key === "ArrowRight") {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % currentImages.length;
-        setActiveImage(currentImages[nextIndex]);
-        return nextIndex;
-      });
-    } else if (event.key === "ArrowLeft") {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex =
-          (prevIndex - 1 + currentImages.length) % currentImages.length;
-        setActiveImage(currentImages[nextIndex]);
-        return nextIndex;
-      });
+  const handleSlideChange = () => {
+    const swiper = swiperRef.current?.swiper;
+    if (swiper) {
+      const newIndex = swiper.activeIndex;
+      setCurrentIndex(newIndex);
+      setActiveImage(images && images[newIndex]);
     }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
-
-  const imageWidth = 360;
-  const sliderPosition = currentIndex * -imageWidth;
+  };
 
   return (
-    <>
-      <SliderWrapper>
-        <ImagesContainer
-          $currentIndex={currentIndex}
-          $imageWidth={imageWidth}
-          $sliderPosition={sliderPosition}
-        >
-          {images?.map((image) => (
-            <Slide key={image}>
-              <BigImage src={image} />
-            </Slide>
-          ))}
-        </ImagesContainer>
-      </SliderWrapper>
+    <SwiperWrapper>
+      <Swiper
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={handleSlideChange}
+        ref={swiperRef}
+        style={{ zIndex: 0 }}
+      >
+        {images?.map((image, index) => (
+          <SwiperSlide key={index}>
+            <BigImage src={image} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
       <ImageButtons>
         {images?.map((image, index) => (
           <ImageButton
@@ -72,13 +59,14 @@ export default function ProductImages({ images }: Props) {
             onClick={() => {
               setActiveImage(image);
               setCurrentIndex(index);
+              swiperRef.current?.swiper.slideTo(index);
             }}
           >
             <Image src={image} />
           </ImageButton>
         ))}
       </ImageButtons>
-    </>
+    </SwiperWrapper>
   );
 }
 
@@ -86,43 +74,13 @@ interface ActiveProps {
   $active: boolean;
 }
 
-interface SliderProps {
-  $imageWidth: number;
-  $currentIndex: number;
-  $sliderPosition: number;
-}
+const SwiperWrapper = styled.div`
+  --swiper-theme-color: black;
+  --swiper-scrollbar-sides-offset: 10%;
+  --swiper-scrollbar-size: 5px;
 
-const SliderWrapper = styled.div`
-  overflow: hidden;
-  width: 360px;
-  height: 250px;
-  margin: auto;
-
-  @media only screen and (max-width: 600px) {
-    width: 300px;
-    height: auto;
-  }
-`;
-
-const ImagesContainer = styled.div<SliderProps>`
-  display: flex;
-  transition: transform 0.2s ease-in-out;
-  transform: ${({ $sliderPosition }) => `translateX(${$sliderPosition}px)`};
-
-  @media only screen and (max-width: 600px) {
-    transform: ${({ $currentIndex }) =>
-      `translateX(${$currentIndex * -300}px)`};
-  }
-`;
-
-const Slide = styled.div`
-  flex: 0 0 auto;
-  width: 360px;
-  height: 250px;
-
-  @media only screen and (max-width: 600px) {
-    width: auto;
-    height: auto;
+  span.swiper-notification {
+    display: none;
   }
 `;
 
@@ -130,6 +88,8 @@ const BigImage = styled.img`
   width: 360px;
   height: 250px;
   object-fit: contain;
+  display: block;
+  margin: auto;
 
   @media only screen and (max-width: 600px) {
     width: 300px;
