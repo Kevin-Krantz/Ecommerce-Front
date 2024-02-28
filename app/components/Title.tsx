@@ -5,6 +5,9 @@ const Title = styled.h1`
   margin-block: unset;
   margin-inline: unset;
   padding: 16px;
+
+  @media only screen and (max-width: 600px) {
+  }
 `;
 
 export default Title;
