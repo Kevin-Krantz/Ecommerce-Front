@@ -8,6 +8,7 @@ import { CartContextProvider } from "./components/CartContext";
 const poppins = Poppins({
   weight: ["400", "500", "700", "900", "100", "200", "300"],
   subsets: ["latin"],
+  display: "swap",
 });
 
 export default function RootLayout({
