@@ -2,7 +2,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import Product from "@/models/Product";
 
 export async function getData(
-  featuredProductId = "65a5b41051c1924087cbeeb0",
+  featuredProductId = "66298993001aaaf0f4401774",
   limit = 10
 ) {
   await mongooseConnect();
