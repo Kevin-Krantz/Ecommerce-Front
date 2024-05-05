@@ -5,11 +5,9 @@ import Cartv2 from "./icons/Cartv2";
 
 const AddToCartAnimationStyle = css`
   &.add-to-cart-button {
-    background: #041625;
-    border: none;
-    border-radius: 8px;
-    -webkit-box-shadow: 0 3px 13px -2px rgba(0, 0, 0, 0.15);
-    box-shadow: 0 3px 13px -2px rgba(0, 0, 0, 0.15);
+    background: transparent;
+    border: 1px solid #fff;
+    border-radius: 5px;
     color: #ffffff;
     display: flex;
     justify-content: space-around;
@@ -18,9 +16,8 @@ const AddToCartAnimationStyle = css`
     outline: none;
     padding: 0.4rem;
     position: relative;
-    text-transform: uppercase;
     transition: 0.2s ease;
-    width: 155px;
+
     text-indent: 20px;
 
     @media only screen and (max-width: 600px) {
@@ -32,12 +29,8 @@ const AddToCartAnimationStyle = css`
       cursor: pointer;
     }
 
-    &:hover,
-    &:focus {
-      -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
-      box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
-      -webkit-transform: translateY(-1px);
-      transform: translateY(-1px);
+    &:hover {
+      background-color: #ffffff1b;
     }
 
     &.added {
@@ -171,9 +164,10 @@ export default function Button({
   $white: white,
   $outline: outline,
   $primary: primary,
-  size,
+  $size: size,
   $block: block,
   $black: black,
+  $red: red,
   type,
   onClick,
   ...rest
@@ -202,16 +196,17 @@ export default function Button({
       $white={white}
       $outline={outline}
       $primary={primary}
-      size={size}
+      $size={size}
       $block={block}
       $black={black}
+      $red={red}
       type={type}
       onClick={handleClick}
       className={`add-to-cart-button ${isAdded ? "added" : ""}`}
       $isAdded={isAdded}
       {...rest}
     >
-      {primary && outline ? (
+      {(primary || black) && outline ? (
         <>
           <Cartv2 />
           {children}
@@ -233,6 +228,8 @@ export const ButtonStyle = css<IButtonProps>`
   text-decoration: none;
   font-weight: 500;
   font-family: inherit;
+  font-size: 16px;
+  white-space: nowrap;
   transition: transform 40ms linear;
 
   svg {
@@ -275,6 +272,7 @@ export const ButtonStyle = css<IButtonProps>`
       color: #fff;
       transition: all 0.2s;
       display: block;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 
       span {
         cursor: pointer;
@@ -304,6 +302,11 @@ export const ButtonStyle = css<IButtonProps>`
       &:active {
         background-color: #ffffff47;
       }
+
+      &:hover,
+      &:focus {
+        background-color: #ffffff1b;
+      }
     `}
 
     ${(props) =>
@@ -312,15 +315,78 @@ export const ButtonStyle = css<IButtonProps>`
     css`
       background-color: #000;
       color: #fff;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px #999;
+      outline: none;
+      transition: scale 1ms ease-in-out, background-color 1ms ease-in-out,
+        transform 1ms ease-in-out;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+      &:hover {
+        scale: 1.03;
+        background-color: #031b00;
+      }
+
+      &:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+        background-color: #0a3b03;
+      }
+    `}
+
+    ${(props) =>
+    props.$red &&
+    !props.$outline &&
+    css`
+      background-color: #000;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 4px #999;
+      outline: none;
+      transition: scale 1ms ease-in-out, background-color 1ms ease-in-out,
+        transform 1ms linear;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+
+      &:hover {
+        scale: 1.03;
+        background-color: #280000;
+      }
+
+      &:active {
+        box-shadow: 0 2px #666;
+        transform: translateY(4px);
+        background-color: #530505;
+      }
     `}
 
   ${(props) =>
     props.$black &&
     props.$outline &&
     css`
-      background-color: transparent;
-      color: #000;
-      border: 1px solid #000;
+      ${AddToCartAnimationStyle}
+      color: black !important;
+      border: 1px solid black !important;
+
+      &:hover,
+      &:focus {
+        background-color: #00000015 !important;
+      }
+
+      &.added {
+        background: #2fbf30 !important;
+        -webkit-box-shadow: 0 0 0 1px rgba(11, 252, 3, 0.45) !important;
+        box-shadow: 0 0 0 1px rgba(11, 252, 3, 0.45) !important;
+      }
+
+      svg:nth-child(2) {
+        stroke: black;
+      }
+
+      svg:nth-child(1) rect {
+        fill: black;
+      }
     `}
 
   ${(props) =>
@@ -340,18 +406,18 @@ export const ButtonStyle = css<IButtonProps>`
     `}
 
   ${(props) =>
-    props.size === "l" &&
+    props.$size &&
+    props.$block &&
+    props.$black &&
     css`
-      font-size: 1.2rem;
-      padding: 10px 20px;
-
-      svg {
-        height: 20px;
-      }
+      width: 100%;
+      font-size: larger;
+      -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     `}
 `;
 
 const StyledButton = styled.button<IButtonProps>`
   ${ButtonStyle}
   ${(props) => props.$primary && props.$outline && AddToCartAnimationStyle}
+  ${(props) => props.$black && props.$outline && AddToCartAnimationStyle}
 `;
