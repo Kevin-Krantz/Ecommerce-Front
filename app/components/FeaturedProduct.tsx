@@ -5,10 +5,9 @@ import Center from "./Center";
 import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import { IProduct } from "@/types/IProduct";
-import Cart from "./icons/Cart";
 import { useCart } from "./CartContext";
-import ReadMore from "./icons/ReadMore";
-import LoadingSpinner from "./icons/LoadingSpinner";
+import DOMPurify from "dompurify";
+import { useAutomaticImageCycling } from "@/hooks/useAutomaticImageCycling";
 
 interface Props {
   featuredProduct: IProduct;
@@ -23,9 +22,25 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
 
   const { _id, title, description, images } = featuredProduct;
 
+  const imagesWithDuplicate = images
+    ? [...images, images[0]]
+    : ["No Images Found!"];
+
+  const { currentImage, index } = useAutomaticImageCycling(
+    imagesWithDuplicate,
+    1500
+  );
+
+  const translateX = -(100 * index) + "%";
+
   function addFeaturedToCart() {
     addProduct(featuredProduct?._id);
   }
+
+  const createMarkup = (htmlContent: string) => {
+    const cleanHTML = DOMPurify.sanitize(htmlContent);
+    return { __html: cleanHTML };
+  };
 
   return (
     <Bg>
@@ -34,19 +49,35 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
           <Column>
             <div>
               <Title>{title}</Title>
-              <Desc>{description}</Desc>
+              {description && (
+                <Desc dangerouslySetInnerHTML={createMarkup(description)} />
+              )}
               <ButtonsWrapper>
                 <ButtonLink href={"/product/" + _id} $outline $white>
                   <span>Läs mer</span>
                 </ButtonLink>
                 <Button $outline $primary onClick={addFeaturedToCart}>
-                  Lägg i kundvagn
+                  <span className="add-to-cart">Lägg i kundvagn</span>
+                  <span className="added-to-cart">Tillagd!</span>
                 </Button>
               </ButtonsWrapper>
             </div>
           </Column>
           <Column>
-            <img src={images && images[0]} />
+            <SliderWrapper>
+              <ImageSlider
+                $translateX={translateX}
+                style={{ transform: `translateX(${translateX})` }}
+              >
+                {imagesWithDuplicate.map((image, idx) => (
+                  <SlideImage
+                    key={idx}
+                    src={image}
+                    alt={`Featured Product ${idx}`}
+                  />
+                ))}
+              </ImageSlider>
+            </SliderWrapper>
           </Column>
         </ColumnsWrapper>
       </Center>
@@ -54,10 +85,18 @@ export default function FeaturedProduct({ featuredProduct }: Props) {
   );
 }
 
+interface ImageSliderProps {
+  $translateX?: string;
+}
+
 const Bg = styled.div`
   background-color: #191716;
   color: white;
-  padding: 50px 0;
+  padding: 30px 0;
+
+  /* background-image: url("/images/grain.jpg");
+  background-repeat: round; */
+  /* background-size: contain; */
 `;
 
 const ColumnsWrapper = styled.div`
@@ -88,7 +127,7 @@ const Column = styled.div`
 const Title = styled.h1`
   margin: 0;
   font-weight: normal;
-  font-size: 3rem;
+  font-size: 2rem;
 
   @media only screen and (max-width: 600px) {
     font-size: 2rem;
@@ -101,6 +140,11 @@ const Desc = styled.div`
   position: relative;
   max-height: 5rem;
   overflow: hidden;
+  line-height: 14px;
+
+  .product-description h2 {
+    font-size: 12px;
+  }
 
   &:before {
     content: "";
@@ -121,4 +165,22 @@ const ButtonsWrapper = styled.div`
   @media only screen and (max-width: 600px) {
     justify-content: center;
   }
+`;
+
+const SliderWrapper = styled.div`
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+`;
+
+const ImageSlider = styled.div<ImageSliderProps>`
+  display: flex;
+  transition: ${({ $translateX }) =>
+    $translateX === "0%" ? "unset" : "transform 0.5s ease-out"};
+`;
+
+const SlideImage = styled.img`
+  flex: 0 0 100%;
+  width: 100%;
+  height: auto;
 `;
