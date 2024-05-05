@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import MobileFooter from "../components/MobileFooter";
 import CartForm from "../components/CartForm";
 import CartProductsTable from "../components/CartProductsTable";
+import Image from "next/image";
 
 interface IFormState {
   name: string;
@@ -97,12 +98,14 @@ export default function CartPage() {
     setFormErrors(updatedErrors);
   };
 
-  if (params.toString().includes("success")) {
+  const includesSuccess = params.toString().includes("success");
+
+  if (includesSuccess) {
     return (
       <>
         <Header />
         <Center>
-          <ColumnsWrapper>
+          <ColumnsWrapper $includesSuccess={includesSuccess}>
             <WhiteBox>
               <h1>Thanks for your order!</h1>
               <p>We will email you the order details.</p>
@@ -121,7 +124,18 @@ export default function CartPage() {
         <ColumnsWrapper>
           <WhiteBox>
             <h2>Kundvagn</h2>
-            {!cartProducts.length && <div>Din kundvagn är tom {":("}</div>}
+            {!cartProducts.length && (
+              <div>
+                Din kundvagn är tom {":("}
+                <ResponsiveImage
+                  src={"/images/emptycart.png"}
+                  priority
+                  alt="Product Not Found Image"
+                  width="700"
+                  height="500"
+                />
+              </div>
+            )}
             {products.length > 0 && cartProducts.length > 0 && (
               <CartProductsTable
                 products={products}
@@ -148,13 +162,36 @@ export default function CartPage() {
   );
 }
 
-const ColumnsWrapper = styled.div`
+interface ColumnProps {
+  $includesSuccess?: boolean;
+}
+
+const ColumnsWrapper = styled.div<ColumnProps>`
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
+  grid-template-columns: ${({ $includesSuccess }) =>
+    $includesSuccess ? "unset" : "1.3fr 0.8fr"};
   gap: 40px;
   align-items: center;
 
   @media only screen and (max-width: 600px) {
+    grid-template-columns: unset;
+    gap: unset;
+  }
+
+  @media only screen and (max-width: 600px) {
     margin-bottom: 8px;
+  }
+`;
+
+const ResponsiveImage = styled(Image)`
+  width: 700px;
+  height: 500px;
+
+  @media only screen and (max-width: 600px) {
+    width: 350px;
+    height: 300px;
+
+    filter: contrast(120%);
+    filter: saturate(150%);
   }
 `;
